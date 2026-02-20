@@ -25,6 +25,11 @@ class Database:
         if self.db is not None:
             try:
                 await self.db.users.create_index("email", unique=True)
+                await self.db.hadiths.create_index("full_text_plain")
+                await self.db.hadiths.create_index("book_id")
+                await self.db.hadiths.create_index("narrators.id")
+                await self.db.narrators.create_index("narrator_id")
+                await self.db.narrators.create_index("name_plain")
             except Exception as e:
                 logger.warning(
                     "Could not create indexes (check DB user permissions): %s", e

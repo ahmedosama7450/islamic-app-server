@@ -10,6 +10,8 @@ from app.core.database import get_database
 from app.core.security import decode_access_token
 from app.schemas.auth import TokenPayload
 from app.schemas.user import UserResponse
+from app.services.hadith_service import HadithService
+from app.services.narrator_service import NarratorService
 from app.services.user_service import UserService
 
 settings = get_settings()
@@ -23,6 +25,18 @@ def get_user_service(
     db: Annotated[AsyncIOMotorDatabase, Depends(get_database)],
 ) -> UserService:
     return UserService(db)
+
+
+def get_hadith_service(
+    db: Annotated[AsyncIOMotorDatabase, Depends(get_database)],
+) -> HadithService:
+    return HadithService(db)
+
+
+def get_narrator_service(
+    db: Annotated[AsyncIOMotorDatabase, Depends(get_database)],
+) -> NarratorService:
+    return NarratorService(db)
 
 
 async def get_current_user(
